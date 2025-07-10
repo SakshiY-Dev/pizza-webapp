@@ -11,13 +11,15 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar"; 
 import Footer from "./components/Footer";
 import ConfirmOrder from "./pages/ConfirmOrder";
+import CartNotification from "./components/CartNotification";
 
 function App() {
   return (
-    <CartProvider className="width-[1400px]">
+    <CartProvider>
       <Router>
         <div className="min-h-screen flex flex-col">
           <Navbar /> 
+          <CartNotification />
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
