@@ -184,7 +184,10 @@ const Home = () => {
             exit={{ opacity: 0, y: -20 }}
             className="flex items-center justify-center gap-3 mb-6"
           >
-            <features[currentFeature].icon className={`text-3xl ${features[currentFeature].color}`} />
+            {(() => {
+              const IconComponent = features[currentFeature].icon;
+              return <IconComponent className={`text-3xl ${features[currentFeature].color}`} />;
+            })()}
             <span className="text-xl font-semibold">{features[currentFeature].text}</span>
           </motion.div>
         </motion.div>
