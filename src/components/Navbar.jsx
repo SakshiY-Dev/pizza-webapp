@@ -1,70 +1,98 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaCartPlus } from "react-icons/fa";
-import { CiPizza } from "react-icons/ci";
+import { ShoppingCart, Pizza, Menu, X, Star, Clock, Heart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { HiMenu, HiX } from "react-icons/hi";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const { cart } = useCart();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/menu", label: "Menu" },
-    { path: "/about", label: "About" },
-    { path: "/contact", label: "Contact" },
+    { path: "/", label: "Home", icon: Pizza },
+    { path: "/menu", label: "Menu", icon: Star },
+    { path: "/about", label: "About", icon: Heart },
+    { path: "/contact", label: "Contact", icon: Clock },
   ];
 
   const isActive = (path) => location.pathname === path;
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="bg-gradient-to-r from-red-800 to-red-700 shadow-2xl sticky top-0 z-50 backdrop-blur-sm">
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? 'glass-effect shadow-2xl' 
+          : 'bg-transparent'
+      }`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3"
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-3 cursor-pointer"
           >
             <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="relative"
             >
-              <CiPizza className="text-4xl sm:text-5xl lg:text-6xl text-amber-400" />
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center shadow-glow">
+                <Pizza className="w-6 h-6 text-white" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-full animate-ping opacity-20"></div>
             </motion.div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
-              LaPizzaria
-            </h1>
+            <div>
+              <h1 className="text-2xl font-display font-bold gradient-text">
+                LaPizzaria
+              </h1>
+              <p className="text-xs text-gray-400 font-medium">Premium Delivery</p>
+            </div>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <ul className="flex items-center gap-6 lg:gap-8">
+          <div className="hidden lg:flex items-center gap-8">
+            <div className="flex items-center gap-1 bg-white/5 rounded-full p-1 backdrop-blur-sm border border-white/10">
               {navItems.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    to={item.path}
-                    className={`relative px-3 py-2 font-semibold text-lg transition-all duration-300 ${
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="relative group"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 ${
                       isActive(item.path)
-                        ? 'text-amber-300'
-                        : 'text-white hover:text-amber-200'
+                        ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-glow'
+                        : 'text-gray-300 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    {item.label}
-                    {isActive(item.path) && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-300 rounded-full"
-                      />
-                    )}
-                  </Link>
-                </li>
+                    <item.icon className="w-4 h-4" />
+                    <span className="font-body">{item.label}</span>
+                  </motion.div>
+                  
+                  {isActive(item.path) && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-accent-400 rounded-full"
+                    />
+                  )}
+                </Link>
               ))}
-            </ul>
+            </div>
 
             {/* Cart Icon */}
             <motion.div
@@ -74,28 +102,29 @@ const Navbar = () => {
             >
               <Link
                 to="/cart"
-                className="text-3xl text-amber-400 transition-all duration-300 hover:text-amber-300 p-2"
+                className="relative p-3 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full shadow-glow hover:shadow-glow-lg transition-all duration-300 group"
               >
-                <FaCartPlus />
+                <ShoppingCart className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                
+                <AnimatePresence>
+                  {cart.length > 0 && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-2 -right-2 bg-accent-400 text-dark-900 text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full shadow-lg"
+                    >
+                      {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </Link>
-              <AnimatePresence>
-                {cart.length > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full shadow-lg"
-                  >
-                    {cart.reduce((sum, item) => sum + item.quantity, 0)}
-                  </motion.span>
-                )}
-              </AnimatePresence>
             </motion.div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
-            {/* Mobile Cart Icon */}
+          <div className="lg:hidden flex items-center gap-4">
+            {/* Mobile Cart */}
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -103,31 +132,36 @@ const Navbar = () => {
             >
               <Link
                 to="/cart"
-                className="text-2xl text-amber-400 transition-all duration-300 hover:text-amber-300 p-2"
+                className="relative p-2 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full shadow-glow"
               >
-                <FaCartPlus />
+                <ShoppingCart className="w-5 h-5 text-white" />
+                <AnimatePresence>
+                  {cart.length > 0 && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-1 -right-1 bg-accent-400 text-dark-900 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full"
+                    >
+                      {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </Link>
-              <AnimatePresence>
-                {cart.length > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full"
-                  >
-                    {cart.reduce((sum, item) => sum + item.quantity, 0)}
-                  </motion.span>
-                )}
-              </AnimatePresence>
             </motion.div>
 
             {/* Hamburger Menu */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white text-2xl p-2"
+              className="p-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/20"
             >
-              {isMobileMenuOpen ? <HiX /> : <HiMenu />}
-            </button>
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-white" />
+              ) : (
+                <Menu className="w-6 h-6 text-white" />
+              )}
+            </motion.button>
           </div>
         </div>
 
@@ -138,30 +172,30 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-red-600/50 py-4"
+              className="lg:hidden border-t border-white/10 py-4 glass-effect rounded-b-2xl mt-2"
             >
-              <ul className="flex flex-col gap-4">
+              <div className="space-y-2">
                 {navItems.map((item) => (
-                  <li key={item.path}>
-                    <Link
-                      to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-4 py-2 font-semibold text-lg transition-all duration-300 rounded-lg ${
-                        isActive(item.path)
-                          ? 'text-amber-300 bg-red-700/50'
-                          : 'text-white hover:text-amber-200 hover:bg-red-700/30'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      isActive(item.path)
+                        ? 'bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-glow'
+                        : 'text-gray-300 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span className="font-body">{item.label}</span>
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
