@@ -25,6 +25,7 @@ const Checkout = () => {
     const totalPrice = getTotalPrice()?.toFixed(2) || "0.00"; 
     clearCart();
     navigate("/confirm-order", { state: { totalPrice } }); 
+  };
 
   return (
     <div className="relative h-screen w-full">
