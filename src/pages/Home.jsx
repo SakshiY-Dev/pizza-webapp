@@ -1,355 +1,455 @@
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { FaPizzaSlice, FaStar, FaHeart, FaArrowRight, FaClock, FaFire } from "react-icons/fa";
+import { 
+  Pizza, 
+  Star, 
+  Clock, 
+  Users, 
+  Award, 
+  ArrowRight, 
+  Play,
+  CheckCircle,
+  Truck,
+  Shield
+} from "lucide-react";
 
 const Home = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [currentFeature, setCurrentFeature] = useState(0);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const features = [
-    { icon: FaPizzaSlice, text: "Handcrafted Pizzas", color: "text-red-500" },
-    { icon: FaFire, text: "Wood-Fired Oven", color: "text-orange-500" },
-    { icon: FaHeart, text: "Made with Love", color: "text-pink-500" },
-    { icon: FaStar, text: "Premium Quality", color: "text-yellow-500" }
+    {
+      icon: Pizza,
+      title: "Handcrafted Pizzas",
+      description: "Made fresh daily with premium ingredients",
+      color: "text-primary-500"
+    },
+    {
+      icon: Clock,
+      title: "30-Min Delivery",
+      description: "Hot and fresh to your doorstep",
+      color: "text-secondary-500"
+    },
+    {
+      icon: Shield,
+      title: "Quality Guaranteed",
+      description: "100% satisfaction or money back",
+      color: "text-accent-500"
+    }
   ];
 
-  const pizzaEmojis = ["🍕", "🍅", "🧀", "🌿", "🫒"];
-  const [floatingPizzas, setFloatingPizzas] = useState([]);
+  const stats = [
+    { number: "50K+", label: "Happy Customers", icon: Users },
+    { number: "25+", label: "Pizza Varieties", icon: Pizza },
+    { number: "4.9★", label: "Average Rating", icon: Star },
+    { number: "15+", label: "Awards Won", icon: Award }
+  ];
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      rating: 5,
+      text: "Best pizza in town! The crust is perfect and toppings are always fresh.",
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+    },
+    {
+      name: "Mike Chen",
+      rating: 5,
+      text: "Fast delivery and amazing taste. LaPizzaria never disappoints!",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+    },
+    {
+      name: "Emily Davis",
+      rating: 5,
+      text: "The wood-fired flavor is incredible. Highly recommend the Margherita!",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+    }
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentFeature((prev) => (prev + 1) % features.length);
-    }, 3000);
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    // Generate floating pizza elements
-    const pizzas = Array.from({ length: 8 }, (_, i) => ({
-      id: i,
-      emoji: pizzaEmojis[Math.floor(Math.random() * pizzaEmojis.length)],
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 3 + Math.random() * 2
-    }));
-    setFloatingPizzas(pizzas);
-  }, []);
-
-  const createSparkle = () => {
-    const sparkles = Array.from({ length: 6 }, (_, i) => (
-      <motion.div
-        key={i}
-        initial={{ scale: 0, rotate: 0 }}
-        animate={{ 
-          scale: [0, 1, 0], 
-          rotate: [0, 180, 360],
-          x: [0, (Math.random() - 0.5) * 100],
-          y: [0, (Math.random() - 0.5) * 100]
-        }}
-        transition={{ 
-          duration: 1.5, 
-          delay: i * 0.1,
-          ease: "easeOut"
-        }}
-        className="absolute text-yellow-400 text-xl pointer-events-none"
-        style={{
-          left: mousePosition.x - 10,
-          top: mousePosition.y - 10
-        }}
-      >
-        ✨
-      </motion.div>
-    ));
-    return sparkles;
-  };
-
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('/landing.png')] bg-cover bg-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70"></div>
-        </div>
-        
-        {/* Animated Background Elements */}
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
         <div className="absolute inset-0">
-          <motion.div 
-            className="absolute top-20 left-20 w-64 h-64 bg-red-500/20 rounded-full blur-3xl"
+          <img
+            src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop"
+            alt="Delicious Pizza"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+        </div>
+
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
             animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3]
+              y: [0, -20, 0],
+              rotate: [0, 5, 0]
             }}
             transition={{ 
-              duration: 4, 
+              duration: 6, 
               repeat: Infinity,
               ease: "easeInOut"
             }}
+            className="absolute top-20 left-10 w-20 h-20 bg-primary-500/20 rounded-full blur-xl"
           />
-          <motion.div 
-            className="absolute bottom-20 right-20 w-80 h-80 bg-orange-500/20 rounded-full blur-3xl"
+          <motion.div
             animate={{ 
-              scale: [1.2, 1, 1.2],
-              opacity: [0.4, 0.7, 0.4]
-            }}
-            transition={{ 
-              duration: 5, 
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
-          <motion.div 
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl"
-            animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.1, 1]
+              y: [0, 20, 0],
+              rotate: [0, -5, 0]
             }}
             transition={{ 
               duration: 8, 
               repeat: Infinity,
-              ease: "linear"
+              ease: "easeInOut",
+              delay: 1
             }}
+            className="absolute bottom-20 right-10 w-32 h-32 bg-secondary-500/20 rounded-full blur-xl"
           />
         </div>
-      </div>
 
-      {/* Floating Pizza Elements */}
-      {floatingPizzas.map((pizza) => (
-        <motion.div
-          key={pizza.id}
-          className="absolute text-4xl pointer-events-none opacity-20"
-          style={{
-            left: `${pizza.x}%`,
-            top: `${pizza.y}%`
-          }}
-          animate={{
-            y: [0, -30, 0],
-            rotate: [0, 360],
-            scale: [1, 1.2, 1]
-          }}
-          transition={{
-            duration: pizza.duration,
-            repeat: Infinity,
-            delay: pizza.delay,
-            ease: "easeInOut"
-          }}
-        >
-          {pizza.emoji}
-        </motion.div>
-      ))}
-
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center px-6">
-        {/* Animated Title */}
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="mb-8"
-        >
-          <motion.h1 
-            className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-red-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent"
-            animate={{ 
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-            }}
-            transition={{ 
-              duration: 3, 
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{
-              backgroundSize: "200% 200%"
-            }}
-          >
-            Welcome to LaPizzaria
-          </motion.h1>
-          
-          {/* Rotating Feature */}
+        {/* Hero Content */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            key={currentFeature}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="flex items-center justify-center gap-3 mb-6"
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
           >
-            {(() => {
-              const IconComponent = features[currentFeature].icon;
-              return <IconComponent className={`text-3xl ${features[currentFeature].color}`} />;
-            })()}
-            <span className="text-xl font-semibold">{features[currentFeature].text}</span>
-          </motion.div>
-        </motion.div>
-
-        {/* Animated Description */}
-        <motion.p 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="text-lg sm:text-2xl max-w-3xl font-light leading-relaxed mb-8"
-        >
-          <motion.span
-            animate={{ opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            Enjoy the best handmade pizzas with fresh ingredients and delicious flavors.
-          </motion.span>
-          <br />
-          <motion.span
-            animate={{ opacity: [1, 0.7, 1] }}
-            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-            className="text-red-300"
-          >
-            Every slice tells a story of tradition and passion! 🍕
-          </motion.span>
-        </motion.p>
-
-        {/* Interactive Stats */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="grid grid-cols-3 gap-8 mb-12"
-        >
-          {[
-            { number: "50K+", label: "Happy Customers", icon: FaHeart },
-            { number: "25+", label: "Pizza Varieties", icon: FaPizzaSlice },
-            { number: "4.9★", label: "Average Rating", icon: FaStar }
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.1, y: -5 }}
-              className="text-center cursor-pointer"
+            <motion.h1 
+              className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <motion.div
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-              >
-                <stat.icon className="text-3xl text-red-400 mx-auto mb-2" />
-              </motion.div>
-              <div className="text-2xl font-bold">{stat.number}</div>
-              <div className="text-sm text-gray-300">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Interactive Order Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7 }}
-          className="relative"
-        >
-          <Link
-            to="/menu"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="group relative inline-block"
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 rounded-full blur-lg opacity-75"
-              animate={{ 
-                scale: isHovered ? 1.1 : 1,
-                opacity: isHovered ? 1 : 0.75
-              }}
-              transition={{ duration: 0.3 }}
-            />
+              Authentic Italian
+              <span className="block gradient-text">Pizza Experience</span>
+            </motion.h1>
             
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white px-8 py-4 rounded-full text-xl font-bold shadow-2xl transition-all duration-300 flex items-center gap-3 overflow-hidden"
+            <motion.p 
+              className="text-xl sm:text-2xl text-white/90 mb-8 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <span className="relative z-10">Order Now</span>
-              
-              <motion.div
-                animate={{ x: isHovered ? 5 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="relative z-10"
-              >
-                <FaArrowRight />
-              </motion.div>
+              Handcrafted with love, delivered with care. Experience the perfect blend 
+              of traditional recipes and modern convenience.
+            </motion.p>
 
-              {/* Button shine effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                animate={{ x: isHovered ? "100%" : "-100%" }}
-                transition={{ duration: 0.6 }}
-                style={{ width: "50%" }}
-              />
-            </motion.button>
-          </Link>
-
-          {/* Pulsing rings around button */}
-          <motion.div
-            className="absolute inset-0 border-2 border-red-400 rounded-full"
-            animate={{ 
-              scale: [1, 1.5, 1],
-              opacity: [0.5, 0, 0.5]
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity,
-              ease: "easeOut"
-            }}
-          />
-          <motion.div
-            className="absolute inset-0 border-2 border-orange-400 rounded-full"
-            animate={{ 
-              scale: [1, 1.8, 1],
-              opacity: [0.3, 0, 0.3]
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: 0.5
-            }}
-          />
-        </motion.div>
-
-        {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="mt-12 flex flex-wrap justify-center gap-4"
-        >
-          {[
-            { icon: FaClock, text: "30min Delivery", to: "/menu" },
-            { icon: FaStar, text: "View Reviews", to: "/about" },
-            { icon: FaHeart, text: "Our Story", to: "/about" }
-          ].map((action, index) => (
             <motion.div
-              key={index}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Link
-                to={action.to}
-                className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium hover:bg-white/20 transition-all duration-300 border border-white/20"
-              >
-                <action.icon className="text-red-400" />
-                {action.text}
+              <Link to="/menu">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-primary text-lg px-8 py-4 flex items-center gap-3"
+                >
+                  Order Now
+                  <ArrowRight className="w-5 h-5" />
+                </motion.button>
               </Link>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+              >
+                <Play className="w-5 h-5" />
+                Watch Our Story
+              </motion.button>
             </motion.div>
-          ))}
-        </motion.div>
-      </div>
 
-      {/* Interactive cursor effect */}
-      {isHovered && createSparkle()}
+            {/* Quick Stats */}
+            <motion.div
+              className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20"
+                >
+                  <stat.icon className="w-8 h-8 text-primary-400 mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-white">{stat.number}</div>
+                  <div className="text-sm text-white/80">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-white dark:bg-neutral-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
+              Why Choose <span className="gradient-text">LaPizzaria</span>?
+            </h2>
+            <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+              We're not just another pizza place. We're passionate artisans dedicated to 
+              bringing you the authentic taste of Italy.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+                whileHover={{ y: -10 }}
+                className="card p-8 text-center group"
+              >
+                <div className={`w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/20 dark:to-secondary-900/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className={`w-8 h-8 ${feature.color}`} />
+                </div>
+                <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-neutral-600 dark:text-neutral-400">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Pizzas Section */}
+      <section className="py-20 bg-neutral-50 dark:bg-neutral-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
+              Our <span className="gradient-text">Signature</span> Pizzas
+            </h2>
+            <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto">
+              Discover our most loved creations, crafted with premium ingredients and traditional techniques.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Margherita Italiana",
+                image: "https://images.unsplash.com/photo-1600028068383-ea11a7a101f3?q=80&w=400&h=300&auto=format&fit=crop",
+                price: "$12.99",
+                description: "Fresh basil, buffalo mozzarella, San Marzano tomatoes"
+              },
+              {
+                name: "Pepperoni Classic",
+                image: "https://images.unsplash.com/photo-1601924576374-990e34464c05?q=80&w=400&h=300&auto=format&fit=crop",
+                price: "$14.99",
+                description: "Premium pepperoni, extra mozzarella, signature sauce"
+              },
+              {
+                name: "Truffle Mushroom",
+                image: "https://images.unsplash.com/photo-1663858366999-aa1ce123a972?q=80&w=400&h=300&auto=format&fit=crop",
+                price: "$18.99",
+                description: "Wild mushrooms, truffle oil, aged parmesan"
+              }
+            ].map((pizza, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+                whileHover={{ y: -10 }}
+                className="card overflow-hidden group"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={pizza.image}
+                    alt={pizza.name}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-bold text-neutral-900 dark:text-white">
+                      {pizza.name}
+                    </h3>
+                    <span className="text-2xl font-bold gradient-text">
+                      {pizza.price}
+                    </span>
+                  </div>
+                  <p className="text-neutral-600 dark:text-neutral-400 mb-4">
+                    {pizza.description}
+                  </p>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full btn-primary"
+                  >
+                    Add to Cart
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-12"
+          >
+            <Link to="/menu">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="btn-secondary text-lg px-8 py-4 flex items-center gap-3 mx-auto"
+              >
+                View Full Menu
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white dark:bg-neutral-900">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
+              What Our <span className="gradient-text">Customers</span> Say
+            </h2>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              key={currentTestimonial}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              className="card p-8 text-center"
+            >
+              <div className="flex justify-center mb-4">
+                {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                  <Star key={i} className="w-6 h-6 text-accent-500 fill-current" />
+                ))}
+              </div>
+              <p className="text-xl text-neutral-700 dark:text-neutral-300 mb-6 italic">
+                "{testimonials[currentTestimonial].text}"
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <img
+                  src={testimonials[currentTestimonial].avatar}
+                  alt={testimonials[currentTestimonial].name}
+                  className="w-12 h-12 rounded-full"
+                />
+                <div>
+                  <div className="font-bold text-neutral-900 dark:text-white">
+                    {testimonials[currentTestimonial].name}
+                  </div>
+                  <div className="text-sm text-neutral-600 dark:text-neutral-400">
+                    Verified Customer
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Testimonial Dots */}
+            <div className="flex justify-center gap-2 mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentTestimonial
+                      ? 'bg-primary-500 w-8'
+                      : 'bg-neutral-300 dark:bg-neutral-600'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary-500 to-secondary-500 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?q=80&w=2070&auto=format&fit=crop"
+            alt="Pizza Background"
+            className="w-full h-full object-cover opacity-20"
+          />
+        </div>
+        
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto"
+          >
+            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-6">
+              Ready to Experience the Best Pizza in Town?
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Join thousands of satisfied customers and taste the difference quality makes.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link to="/menu">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white text-primary-600 font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3"
+                >
+                  <Pizza className="w-5 h-5" />
+                  Order Your Pizza Now
+                </motion.button>
+              </Link>
+              
+              <div className="flex items-center gap-4 text-white">
+                <div className="flex items-center gap-2">
+                  <Truck className="w-5 h-5" />
+                  <span>Free Delivery</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  <span>30-Min Guarantee</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 };
