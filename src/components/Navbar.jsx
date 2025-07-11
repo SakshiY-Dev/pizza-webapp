@@ -90,7 +90,7 @@ const Navbar = () => {
                       className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                         isActive(item.path)
                           ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                          : 'text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                          : 'text-neutral-900 dark:text-neutral-100 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'
                       }`}
                     >
                       {item.label}
@@ -104,7 +104,7 @@ const Navbar = () => {
                 onClick={toggleTheme}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+                className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </motion.button>
@@ -147,7 +147,7 @@ const Navbar = () => {
                       alt={user.name}
                       className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-neutral-700 dark:text-neutral-300 font-medium">
+                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">
                       {user.name}
                     </span>
                   </motion.button>
@@ -162,7 +162,7 @@ const Navbar = () => {
                       >
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+                          className="w-full flex items-center gap-2 px-4 py-2 text-left text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
                         >
                           <LogOut className="w-4 h-4" />
                           Sign Out
@@ -175,7 +175,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => openAuthModal('login')}
-                    className="px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
+                    className="px-4 py-2 text-neutral-900 dark:text-neutral-100 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
                   >
                     Sign In
                   </button>
@@ -211,7 +211,7 @@ const Navbar = () => {
               {/* Hamburger Menu */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+                className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -236,7 +236,7 @@ const Navbar = () => {
                       className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                         isActive(item.path)
                           ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                          : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                          : 'text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800'
                       }`}
                     >
                       {item.label}
@@ -244,10 +244,10 @@ const Navbar = () => {
                   ))}
                   
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-neutral-700 dark:text-neutral-300 font-medium">Theme</span>
+                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">Theme</span>
                     <button
                       onClick={toggleTheme}
-                      className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
+                      className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
                     >
                       {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                     </button>
@@ -257,11 +257,11 @@ const Navbar = () => {
                     <div className="px-4 py-3 border-t border-neutral-200 dark:border-neutral-700">
                       <div className="flex items-center gap-3 mb-3">
                         <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-                        <span className="text-neutral-700 dark:text-neutral-300 font-medium">{user.name}</span>
+                        <span className="text-neutral-900 dark:text-neutral-100 font-medium">{user.name}</span>
                       </div>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 text-neutral-700 dark:text-neutral-300 hover:text-red-600"
+                        className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 hover:text-red-600"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
@@ -274,7 +274,7 @@ const Navbar = () => {
                           openAuthModal('login');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
+                        className="w-full text-left px-4 py-2 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
                       >
                         Sign In
                       </button>
