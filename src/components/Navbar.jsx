@@ -104,7 +104,7 @@ const Navbar = () => {
                 onClick={toggleTheme}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </motion.button>
@@ -122,8 +122,8 @@ const Navbar = () => {
                   <AnimatePresence>
                     {cart.length > 0 && (
                       <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
+                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 font-semibold'
+                        : 'text-slate-800 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                         exit={{ scale: 0 }}
                         className="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full"
                       >
@@ -140,14 +140,14 @@ const Navbar = () => {
                   <motion.button
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     whileHover={{ scale: 1.05 }}
-                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                    className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   >
                     <img
                       src={user.avatar}
                       alt={user.name}
                       className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">
+                    <span className="text-slate-800 dark:text-slate-100 font-medium">
                       {user.name}
                     </span>
                   </motion.button>
@@ -158,11 +158,11 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 py-2"
+                        className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-2"
                       >
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-left text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+                          className="w-full flex items-center gap-2 px-4 py-2 text-left text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                         >
                           <LogOut className="w-4 h-4" />
                           Sign Out
@@ -175,7 +175,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => openAuthModal('login')}
-                    className="px-4 py-2 text-neutral-900 dark:text-neutral-100 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
+                    className="px-4 py-2 text-slate-800 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
                   >
                     Sign In
                   </button>
@@ -211,7 +211,7 @@ const Navbar = () => {
               {/* Hamburger Menu */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
+                className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -225,7 +225,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden border-t border-neutral-200 dark:border-neutral-700 py-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg"
+                className="lg:hidden border-t border-slate-200 dark:border-slate-700 py-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg"
               >
                 <div className="space-y-2">
                   {navItems.map((item) => (
@@ -235,8 +235,8 @@ const Navbar = () => {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
                         isActive(item.path)
-                          ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                          : 'text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                          ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 font-semibold'
+                          : 'text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                     >
                       {item.label}
@@ -244,37 +244,37 @@ const Navbar = () => {
                   ))}
                   
                   <div className="flex items-center justify-between px-4 py-3">
-                    <span className="text-neutral-900 dark:text-neutral-100 font-medium">Theme</span>
+                    <span className="text-slate-800 dark:text-slate-100 font-medium">Theme</span>
                     <button
                       onClick={toggleTheme}
-                      className="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
+                      className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100"
                     >
                       {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                     </button>
                   </div>
 
                   {user ? (
-                    <div className="px-4 py-3 border-t border-neutral-200 dark:border-neutral-700">
+                    <div className="px-4 py-3 border-t border-slate-200 dark:border-slate-700">
                       <div className="flex items-center gap-3 mb-3">
                         <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-                        <span className="text-neutral-900 dark:text-neutral-100 font-medium">{user.name}</span>
+                        <span className="text-slate-800 dark:text-slate-100 font-medium">{user.name}</span>
                       </div>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 hover:text-red-600"
+                        className="flex items-center gap-2 text-slate-800 dark:text-slate-100 hover:text-red-600"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
                       </button>
                     </div>
                   ) : (
-                    <div className="px-4 py-3 space-y-2 border-t border-neutral-200 dark:border-neutral-700">
+                    <div className="px-4 py-3 space-y-2 border-t border-slate-200 dark:border-slate-700">
                       <button
                         onClick={() => {
                           openAuthModal('login');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
+                        className="w-full text-left px-4 py-2 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
                       >
                         Sign In
                       </button>

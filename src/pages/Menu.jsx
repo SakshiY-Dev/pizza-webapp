@@ -47,7 +47,7 @@ const pizzaList = [
     price: 16.99,
     category: "vegetarian",
     rating: 4.9,
-    image: "https://plus.unsplash.com/premium_photo-1663858366999-aa1ce123a972?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ const pizzaList = [
     price: 18.99,
     category: "meat",
     rating: 4.8,
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 8,
