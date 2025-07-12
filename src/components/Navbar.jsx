@@ -122,8 +122,8 @@ const Navbar = () => {
                   <AnimatePresence>
                     {cart.length > 0 && (
                       <motion.div
-                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 font-semibold'
-                        : 'text-slate-800 dark:text-slate-100 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
                         className="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full"
                       >
