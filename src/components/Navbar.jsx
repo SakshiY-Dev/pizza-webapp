@@ -52,12 +52,12 @@ const Navbar = () => {
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           isScrolled 
-            ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-blue-100' 
-            : 'bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700'
+            ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-primary-100' 
+            : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-700'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-18">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
               <motion.div
@@ -65,20 +65,20 @@ const Navbar = () => {
                 transition={{ duration: 0.5 }}
                 className="relative"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg">
-                  <Pizza className="w-6 h-6 text-white" />
+                <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center shadow-lg">
+                  <Pizza className="w-7 h-7 text-white" />
                 </div>
               </motion.div>
               <div>
                 <h1 className={`text-2xl font-display font-bold ${
                   isScrolled 
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent' 
+                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent' 
                     : 'text-white'
                 }`}>
                   LaPizzaria
                 </h1>
-                <p className={`text-xs ${
-                  isScrolled ? 'text-gray-500' : 'text-blue-100'
+                <p className={`text-xs font-medium ${
+                  isScrolled ? 'text-neutral-500' : 'text-primary-100'
                 }`}>
                   Premium Delivery
                 </p>
@@ -96,13 +96,13 @@ const Navbar = () => {
                   >
                     <motion.div
                       whileHover={{ scale: 1.05 }}
-                      className={`px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
+                      className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                         isActive(item.path)
                           ? isScrolled
-                            ? 'text-white bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg'
-                            : 'text-blue-600 bg-white/20 backdrop-blur-sm shadow-lg'
+                            ? 'text-white bg-gradient-to-r from-primary-500 to-secondary-500 shadow-lg'
+                            : 'text-primary-600 bg-white/20 backdrop-blur-sm shadow-lg'
                           : isScrolled
-                            ? 'text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500'
+                            ? 'text-neutral-700 hover:text-white hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500'
                             : 'text-white/90 hover:text-white hover:bg-white/20 backdrop-blur-sm'
                       }`}
                     >
@@ -111,7 +111,7 @@ const Navbar = () => {
                     {isActive(item.path) && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-red-400 rounded-full"
+                        className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-accent-400 to-accent-500 rounded-full"
                         initial={false}
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
                       />
@@ -127,7 +127,7 @@ const Navbar = () => {
               >
                 <Link
                   to="/cart"
-                  className="relative p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  className="relative p-4 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
                   <ShoppingCart className="w-6 h-6 text-white" />
                   <AnimatePresence>
@@ -136,7 +136,7 @@ const Navbar = () => {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
-                        className="absolute -top-2 -right-2 bg-yellow-400 text-gray-900 text-sm font-bold w-6 h-6 flex items-center justify-center rounded-full shadow-lg border-2 border-white"
+                        className="absolute -top-2 -right-2 bg-red-500 text-white text-sm font-bold w-7 h-7 flex items-center justify-center rounded-full shadow-lg border-2 border-white"
                       >
                         {totalCartItems}
                       </motion.div>
@@ -151,9 +151,9 @@ const Navbar = () => {
                   <motion.button
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     whileHover={{ scale: 1.05 }}
-                    className={`flex items-center gap-3 p-2 rounded-xl transition-all duration-300 ${
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-300 ${
                       isScrolled
-                        ? 'hover:bg-gray-100 text-gray-700'
+                        ? 'hover:bg-neutral-100 text-neutral-700'
                         : 'hover:bg-white/20 text-white'
                     }`}
                   >
@@ -173,11 +173,11 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-200 py-2"
+                        className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-neutral-200 py-2"
                       >
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-left text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-left text-neutral-700 hover:bg-red-50 hover:text-red-600 transition-colors"
                         >
                           <LogOut className="w-4 h-4" />
                           Sign Out
@@ -190,9 +190,9 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => openAuthModal('login')}
-                    className={`px-4 py-2 font-semibold rounded-lg transition-all duration-300 ${
+                    className={`px-5 py-2.5 font-semibold rounded-lg transition-all duration-300 ${
                       isScrolled
-                        ? 'text-gray-700 hover:text-blue-600'
+                        ? 'text-neutral-700 hover:text-primary-600'
                         : 'text-white/90 hover:text-white hover:bg-white/20'
                     }`}
                   >
@@ -202,7 +202,7 @@ const Navbar = () => {
                     onClick={() => openAuthModal('signup')}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     Sign Up
                   </motion.button>
@@ -213,7 +213,7 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center gap-4">
               {/* Mobile Cart */}
-              <Link to="/cart" className="relative p-2.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl shadow-lg">
+              <Link to="/cart" className="relative p-3 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl shadow-lg">
                 <ShoppingCart className="w-5 h-5 text-white" />
                 <AnimatePresence>
                   {totalCartItems > 0 && (
@@ -221,7 +221,7 @@ const Navbar = () => {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border border-white"
+                      className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full border-2 border-white"
                     >
                       {totalCartItems}
                     </motion.div>
@@ -234,7 +234,7 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`p-2 rounded-lg transition-colors ${
                   isScrolled
-                    ? 'bg-gray-100 text-gray-700'
+                    ? 'bg-neutral-100 text-neutral-700'
                     : 'bg-white/20 text-white'
                 }`}
               >
@@ -260,8 +260,8 @@ const Navbar = () => {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
                         isActive(item.path)
-                          ? 'text-white bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg'
-                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white'
+                          ? 'text-white bg-gradient-to-r from-primary-500 to-secondary-500 shadow-lg'
+                          : 'text-neutral-700 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white'
                       }`}
                     >
                       {item.label}
@@ -269,10 +269,10 @@ const Navbar = () => {
                   ))}
 
                   {user ? (
-                    <div className="px-4 py-3 border-t border-gray-200">
+                    <div className="px-4 py-3 border-t border-neutral-200">
                       <div className="flex items-center gap-3 mb-3">
                         <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-                        <span className="text-gray-700 font-semibold">{user.name}</span>
+                        <span className="text-neutral-700 font-semibold">{user.name}</span>
                       </div>
                       <button
                         onClick={handleLogout}
@@ -283,13 +283,13 @@ const Navbar = () => {
                       </button>
                     </div>
                   ) : (
-                    <div className="px-4 py-3 space-y-2 border-t border-gray-200">
+                    <div className="px-4 py-3 space-y-2 border-t border-neutral-200">
                       <button
                         onClick={() => {
                           openAuthModal('login');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-semibold"
+                        className="w-full text-left px-4 py-2 text-neutral-700 hover:bg-neutral-100 rounded-lg font-semibold"
                       >
                         Sign In
                       </button>
@@ -298,7 +298,7 @@ const Navbar = () => {
                           openAuthModal('signup');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2.5 rounded-lg font-bold shadow-lg"
+                        className="w-full bg-gradient-to-r from-accent-500 to-accent-600 text-white py-2.5 rounded-lg font-bold shadow-lg"
                       >
                         Sign Up
                       </button>
