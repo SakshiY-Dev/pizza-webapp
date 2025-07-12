@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
-import { ThemeProvider } from "./context/ThemeContext";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
 import Home from "./pages/Home";
@@ -18,41 +17,39 @@ import CartNotification from "./components/CartNotification";
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <CartProvider>
-          <Router>
-            <div className="min-h-screen flex flex-col">
-              <Navbar /> 
-              <CartNotification />
-              <div className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/menu" element={<Menu />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/order-tracking" element={<OrderTracking />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/confirm-order" element={<ConfirmOrder />} />
-                </Routes>
-              </div>
-              <Footer />
-              <Toaster 
-                position="top-right"
-                toastOptions={{
-                  duration: 3000,
-                  style: {
-                    background: '#363636',
-                    color: '#fff',
-                  },
-                }}
-              />
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col bg-gray-50">
+            <Navbar /> 
+            <CartNotification />
+            <div className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/menu" element={<Menu />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/order-tracking" element={<OrderTracking />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/confirm-order" element={<ConfirmOrder />} />
+              </Routes>
             </div>
-          </Router>
-        </CartProvider>
-      </AuthProvider>
-    </ThemeProvider>
+            <Footer />
+            <Toaster 
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: '#1f2937',
+                  color: '#fff',
+                },
+              }}
+            />
+          </div>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
