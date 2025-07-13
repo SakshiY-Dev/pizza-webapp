@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Pizza, Menu, X, User, LogOut } from "lucide-react";
+import { ShoppingCart, Menu, X, User, LogOut } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -50,122 +50,71 @@ const Navbar = () => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-white/95 backdrop-blur-lg shadow-xl border-b border-primary-100' 
-            : 'bg-gradient-to-r from-primary-600 via-secondary-600 to-primary-700'
+            ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100' 
+            : 'bg-white'
         }`}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-18">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className="relative"
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-accent-500 to-accent-600 rounded-full flex items-center justify-center shadow-lg">
-                  <Pizza className="w-7 h-7 text-white" />
-                </div>
-              </motion.div>
-              <div>
-                <h1 className={`text-2xl font-display font-bold ${
-                  isScrolled 
-                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent' 
-                    : 'text-white'
-                }`}>
-                  LaPizzaria
-                </h1>
-                <p className={`text-xs font-medium ${
-                  isScrolled ? 'text-neutral-500' : 'text-primary-100'
-                }`}>
-                  Premium Delivery
-                </p>
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">P</span>
               </div>
+              <span className="text-xl font-semibold text-black">Pizza</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
-              <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-8">
+              <div className="flex items-center gap-1">
                 {navItems.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className="relative group"
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      isActive(item.path)
+                        ? 'text-black bg-gray-100'
+                        : 'text-gray-600 hover:text-black hover:bg-gray-50'
+                    }`}
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                        isActive(item.path)
-                          ? isScrolled
-                            ? 'text-white bg-gradient-to-r from-primary-500 to-secondary-500 shadow-lg'
-                            : 'text-primary-600 bg-white/20 backdrop-blur-sm shadow-lg'
-                          : isScrolled
-                            ? 'text-neutral-700 hover:text-white hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500'
-                            : 'text-white/90 hover:text-white hover:bg-white/20 backdrop-blur-sm'
-                      }`}
-                    >
-                      {item.label}
-                    </motion.div>
-                    {isActive(item.path) && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-accent-400 to-accent-500 rounded-full"
-                        initial={false}
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                      />
-                    )}
+                    {item.label}
                   </Link>
                 ))}
               </div>
 
               {/* Cart */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="relative"
-              >
-                <Link
-                  to="/cart"
-                  className="relative p-4 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
-                >
-                  <ShoppingCart className="w-6 h-6 text-white" />
-                  <AnimatePresence>
-                    {totalCartItems > 0 && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
-                        className="absolute -top-2 -right-2 bg-red-500 text-white text-sm font-bold w-7 h-7 flex items-center justify-center rounded-full shadow-lg border-2 border-white"
-                      >
-                        {totalCartItems}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Link>
-              </motion.div>
+              <Link to="/cart" className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                <ShoppingCart className="w-6 h-6 text-gray-700" />
+                <AnimatePresence>
+                  {totalCartItems > 0 && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-1 -right-1 bg-accent-500 text-white text-xs font-medium w-5 h-5 flex items-center justify-center rounded-full"
+                    >
+                      {totalCartItems}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Link>
 
               {/* Auth Section */}
               {user ? (
                 <div className="relative">
-                  <motion.button
+                  <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    whileHover={{ scale: 1.05 }}
-                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-300 ${
-                      isScrolled
-                        ? 'hover:bg-neutral-100 text-neutral-700'
-                        : 'hover:bg-white/20 text-white'
-                    }`}
+                    className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded-lg transition-colors"
                   >
                     <img
                       src={user.avatar}
                       alt={user.name}
-                      className="w-10 h-10 rounded-full border-2 border-white shadow-lg"
+                      className="w-8 h-8 rounded-full"
                     />
-                    <span className="font-semibold">
-                      {user.name}
-                    </span>
-                  </motion.button>
+                    <span className="font-medium text-gray-700">{user.name}</span>
+                  </button>
 
                   <AnimatePresence>
                     {showUserMenu && (
@@ -173,11 +122,11 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-neutral-200 py-2"
+                        className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2"
                       >
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-left text-neutral-700 hover:bg-red-50 hover:text-red-600 transition-colors"
+                          className="w-full flex items-center gap-3 px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition-colors"
                         >
                           <LogOut className="w-4 h-4" />
                           Sign Out
@@ -190,38 +139,31 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => openAuthModal('login')}
-                    className={`px-5 py-2.5 font-semibold rounded-lg transition-all duration-300 ${
-                      isScrolled
-                        ? 'text-neutral-700 hover:text-primary-600'
-                        : 'text-white/90 hover:text-white hover:bg-white/20'
-                    }`}
+                    className="text-gray-600 hover:text-black font-medium transition-colors"
                   >
                     Sign In
                   </button>
-                  <motion.button
+                  <button
                     onClick={() => openAuthModal('signup')}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-2.5 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="minimal-button"
                   >
                     Sign Up
-                  </motion.button>
+                  </button>
                 </div>
               )}
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="lg:hidden flex items-center gap-4">
-              {/* Mobile Cart */}
-              <Link to="/cart" className="relative p-3 bg-gradient-to-r from-accent-500 to-accent-600 rounded-xl shadow-lg">
-                <ShoppingCart className="w-5 h-5 text-white" />
+            <div className="md:hidden flex items-center gap-4">
+              <Link to="/cart" className="relative p-2">
+                <ShoppingCart className="w-6 h-6 text-gray-700" />
                 <AnimatePresence>
                   {totalCartItems > 0 && (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full border-2 border-white"
+                      className="absolute -top-1 -right-1 bg-accent-500 text-white text-xs font-medium w-5 h-5 flex items-center justify-center rounded-full"
                     >
                       {totalCartItems}
                     </motion.div>
@@ -229,14 +171,9 @@ const Navbar = () => {
                 </AnimatePresence>
               </Link>
 
-              {/* Hamburger Menu */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`p-2 rounded-lg transition-colors ${
-                  isScrolled
-                    ? 'bg-neutral-100 text-neutral-700'
-                    : 'bg-white/20 text-white'
-                }`}
+                className="p-2 hover:bg-gray-50 rounded-lg transition-colors"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -250,7 +187,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden border-t border-white/20 py-4 bg-white/95 backdrop-blur-lg rounded-b-xl mt-2"
+                className="md:hidden border-t border-gray-100 py-4"
               >
                 <div className="space-y-2">
                   {navItems.map((item) => (
@@ -258,10 +195,10 @@ const Navbar = () => {
                       key={item.path}
                       to={item.path}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                      className={`block px-4 py-2 rounded-lg font-medium transition-colors ${
                         isActive(item.path)
-                          ? 'text-white bg-gradient-to-r from-primary-500 to-secondary-500 shadow-lg'
-                          : 'text-neutral-700 hover:bg-gradient-to-r hover:from-primary-500 hover:to-secondary-500 hover:text-white'
+                          ? 'text-black bg-gray-100'
+                          : 'text-gray-600 hover:text-black hover:bg-gray-50'
                       }`}
                     >
                       {item.label}
@@ -269,27 +206,27 @@ const Navbar = () => {
                   ))}
 
                   {user ? (
-                    <div className="px-4 py-3 border-t border-neutral-200">
+                    <div className="px-4 py-2 border-t border-gray-100 mt-4 pt-4">
                       <div className="flex items-center gap-3 mb-3">
                         <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full" />
-                        <span className="text-neutral-700 font-semibold">{user.name}</span>
+                        <span className="font-medium text-gray-700">{user.name}</span>
                       </div>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 text-red-600 hover:text-red-700 font-semibold"
+                        className="flex items-center gap-2 text-gray-600 hover:text-black font-medium"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
                       </button>
                     </div>
                   ) : (
-                    <div className="px-4 py-3 space-y-2 border-t border-neutral-200">
+                    <div className="px-4 py-2 space-y-2 border-t border-gray-100 mt-4 pt-4">
                       <button
                         onClick={() => {
                           openAuthModal('login');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-neutral-700 hover:bg-neutral-100 rounded-lg font-semibold"
+                        className="w-full text-left text-gray-600 hover:text-black font-medium"
                       >
                         Sign In
                       </button>
@@ -298,7 +235,7 @@ const Navbar = () => {
                           openAuthModal('signup');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="w-full bg-gradient-to-r from-accent-500 to-accent-600 text-white py-2.5 rounded-lg font-bold shadow-lg"
+                        className="w-full minimal-button"
                       >
                         Sign Up
                       </button>
@@ -311,7 +248,6 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Auth Modal */}
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
