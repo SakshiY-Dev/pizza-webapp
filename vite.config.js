@@ -7,6 +7,7 @@ export default defineConfig({
   base: "./",
   server: {
     open: true,
+
     port: 5176,
   },
   build: {
